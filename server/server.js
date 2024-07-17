@@ -44,6 +44,17 @@ app.post('/api/punch', async (req, res) => {
   }
 });
 
+app.get('/api/records', async (req, res) => {
+  try {
+    const data = await fs.readFile(path.join(__dirname, 'list.json'), 'utf8');
+    const records = JSON.parse(data);
+    res.json(records);
+  } catch (error) {
+    console.error('Error reading records:', error);
+    res.status(500).json({ error: 'Unable to retrieve records' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
